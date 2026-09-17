@@ -1,10 +1,15 @@
+import os
+from dotenv import load_dotenv
 import streamlit as st
 from ollama import chat
+
+load_dotenv()
+MODEL = os.environ.get("OLLAMA_MODEL", "granite4.2:8b")
 
 st.set_page_config(page_title="Local LLM Chat", page_icon="💬", layout="centered")
 
 st.title("💬 Local LLM Chat")
-st.caption("Powered by Ollama & Granite")
+st.caption(f"Powered by Ollama · model: `{MODEL}`")
 
 # Session state to store conversation history
 if "messages" not in st.session_state:
@@ -28,7 +33,7 @@ if prompt := st.chat_input("Enter your prompt here..."):
         full_response = ""
         try:
             stream = chat(
-                model="granite4.2:8b",
+                model=MODEL,
                 messages=st.session_state.messages,
                 stream=True,
             )

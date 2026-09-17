@@ -29,13 +29,38 @@ pip3 install -r requirements.txt
 ```
 
 ### 4. Pull a model with Ollama
+
+> **Important:** You must pull a model locally before running any script. The model name used at runtime **must match** the one you pulled — if they differ the project will fail with a model-not-found error.
+
+The default model is `granite4.2:8b`. Pull it with:
+
 ```bash
 ollama pull granite4.2:8b
 ```
 
+Browse all available models at [ollama.com/library](https://ollama.com/library).
+
+### 5. Configure your environment
+
+Copy the example env file and edit it:
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and set the model name to whichever model you pulled:
+
+```
+OLLAMA_MODEL=granite4.2:8b
+```
+
+> `.env` is listed in `.gitignore` and will never be committed. Never put secrets in `.env.example`.
+
 ## Usage
 
-Each script sends the prompt *"Why is the sky blue?"* to the local `granite4.2:8b` model and prints the response. Pick the one that matches your use case:
+All scripts load `.env` automatically via `python-dotenv` and read `OLLAMA_MODEL` from it (falling back to `granite4.2:8b` if the variable is not set). Run `ollama list` to confirm the model name matches what is installed locally.
+
+Each script sends the prompt *"Why is the sky blue?"* to the configured model and prints the response. Pick the one that matches your use case:
 
 ### `main1.py` — Single blocking chat request
 Uses the `chat` API and waits for the full response before printing.
@@ -70,6 +95,8 @@ ollama-local-llm/
 ├── main2.py          # Streaming chat response via the chat API
 ├── main3.py          # One-shot completion via the generate API
 ├── requirements.txt  # Python dependencies
+├── .env.example      # Template for environment variables (safe to commit)
+├── .env              # Your local config — git-ignored, never committed
 └── .gitignore
 ```
 
