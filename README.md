@@ -1,6 +1,6 @@
 # ollama-local-llm
 
-A minimal Python project for chatting with local LLMs via [Ollama](https://ollama.com).
+A minimal Python project for chatting with local LLMs via [Ollama](https://ollama.com), based on the official [ollama-python](https://github.com/ollama/ollama-python) library.
 
 ## Prerequisites
 
