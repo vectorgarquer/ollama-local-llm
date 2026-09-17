@@ -55,10 +55,17 @@ Uses the lower-level `generate` API to produce a one-shot completion.
 python3 main3.py
 ```
 
+### `app.py` — Streamlit Web Chat UI
+Interactive web chat interface with real-time streaming and message history.
+```bash
+streamlit run app.py
+```
+
 ## Project Structure
 
 ```
 ollama-local-llm/
+├── app.py            # Streamlit interactive chat UI
 ├── main1.py          # Blocking chat request via the chat API
 ├── main2.py          # Streaming chat response via the chat API
 ├── main3.py          # One-shot completion via the generate API
