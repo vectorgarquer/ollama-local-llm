@@ -119,6 +119,27 @@ Streamlit web UI that wraps Ollama through the LangChain `Ollama` integration in
 streamlit run examples/local_llm_with_langchain.py
 ```
 
+### `examples/local_llm_with_crewai.py` — Multi-agent orchestration via CrewAI
+Streamlit web UI that demonstrates how to use [CrewAI](https://www.crewai.com) to orchestrate AI agents powered by a local Ollama model. Instead of chatting directly with an LLM, you define autonomous **Agents** (with roles, goals, and backstories), **Tasks** (units of work assigned to an agent), and a **Crew** (the container that coordinates them). The example creates a single-agent crew that responds to a user prompt — a minimal scaffold for building more complex multi-agent pipelines.
+
+> **Requires** `crewai` in addition to the base dependencies (already in `requirements.txt`).
+
+```bash
+streamlit run examples/local_llm_with_crewai.py
+```
+
+### `examples/story_writing_with_crewai.py` — Sequential multi-agent pipeline via CrewAI
+Streamlit web UI showcasing a **sequential multi-agent workflow** with CrewAI and Ollama. Two specialised agents work in order:
+
+1. **Writer** — takes the user's prompt and drafts a short story.
+2. **Editor** — automatically receives the Writer's output as context and refines it for clarity, coherence, and flow.
+
+The final result is displayed side-by-side: the raw Writer draft on the left and the polished Editor version on the right. This is a practical demonstration of chaining agents so the output of one task feeds directly into the next.
+
+```bash
+streamlit run examples/story_writing_with_crewai.py
+```
+
 ## Linting & Formatting
 
 This project uses [Ruff](https://docs.astral.sh/ruff/) for linting and formatting. It is included in `requirements.txt` and configured in [`ruff.toml`](ruff.toml).
@@ -146,8 +167,10 @@ ollama-local-llm/
 │   ├── chat_blocking.py           # Blocking chat request via the chat API
 │   ├── chat_streaming.py          # Streaming chat response via the chat API
 │   ├── generate_completion.py     # One-shot completion via the generate API
-│   ├── vision_describe_image.py   # Multimodal image description using llava
-│   └── local_llm_with_langchain.py # Streamlit UI using LangChain's Ollama wrapper
+│   ├── vision_describe_image.py    # Multimodal image description using llava
+│   ├── local_llm_with_langchain.py  # Streamlit UI using LangChain's Ollama wrapper
+│   ├── local_llm_with_crewai.py    # Single-agent orchestration via CrewAI
+│   └── story_writing_with_crewai.py # Sequential Writer→Editor pipeline via CrewAI
 │
 ├── app.py                         # Streamlit interactive chat UI (main entry point)
 ├── requirements.txt               # Python dependencies
@@ -155,6 +178,19 @@ ollama-local-llm/
 ├── .env                           # Your local config — git-ignored, never committed
 └── .gitignore
 ```
+
+## Stopping Streamlit
+
+Press `Ctrl+C` in the terminal to stop any Streamlit app. If the process hangs
+(common with CrewAI examples due to background telemetry threads), force-kill it
+by process name:
+
+```bash
+pkill -9 -f "streamlit"
+```
+
+> **Tip:** Add `OTEL_SDK_DISABLED=true` to your `.env` to disable CrewAI telemetry
+> so `Ctrl+C` exits immediately without needing a force-kill.
 
 ## Security Notes
 
