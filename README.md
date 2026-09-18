@@ -19,13 +19,13 @@ cd ollama-local-llm
 
 ### 2. Create and activate a virtual environment
 ```bash
-python3 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 ```
 
 ### 3. Install dependencies
 ```bash
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ### 4. Pull a model with Ollama
@@ -88,26 +88,26 @@ streamlit run app.py
 ### `examples/chat_blocking.py` — Single blocking chat request
 Uses the `chat` API and waits for the full response before printing.
 ```bash
-python3 examples/chat_blocking.py
+python examples/chat_blocking.py
 ```
 
 ### `examples/chat_streaming.py` — Streaming chat response
 Uses the `chat` API with `stream=True`, printing each token as it arrives.
 ```bash
-python3 examples/chat_streaming.py
+python examples/chat_streaming.py
 ```
 
 ### `examples/generate_completion.py` — Generate API (single turn)
 Uses the lower-level `generate` API to produce a one-shot completion.
 ```bash
-python3 examples/generate_completion.py
+python examples/generate_completion.py
 ```
 
 ### `examples/vision_describe_image.py` — Multimodal image description
 Uses the `llava:7b` vision model to analyse an image and produce a textual description.
 Place an image named `image.jpg` inside `examples/images/`, then run:
 ```bash
-python3 examples/vision_describe_image.py
+python examples/vision_describe_image.py
 ```
 
 > **Requires** `ollama pull llava:7b` before running.
@@ -158,7 +158,7 @@ ollama-local-llm/
 
 ## Security Notes
 
-- Keep dependencies up to date: `pip3 install --upgrade -r requirements.txt`.
+- Keep dependencies up to date: `pip install --upgrade -r requirements.txt`.
 
 ## License
 
