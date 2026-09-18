@@ -77,10 +77,11 @@ with st.sidebar:
         )
 
     uploaded_files = st.file_uploader(
-        "Attach files"
-        + (" (images or text)" if supports_vision else " (text/code only)"),
+        "📁 Drag and drop files or browse"
+        + (" (images & text)" if supports_vision else " (text/code only)"),
         accept_multiple_files=True,
         type=allowed_types,
+        help="Drag & drop images/files directly onto this dropzone or browse.",
     )
     if st.button("Clear Chat History", use_container_width=True):
         st.session_state.messages = []
