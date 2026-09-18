@@ -112,6 +112,13 @@ python3 examples/vision_describe_image.py
 
 > **Requires** `ollama pull llava:7b` before running.
 
+### `examples/local_llm_with_langchain.py` — Streamlit UI via LangChain
+Streamlit web UI that wraps Ollama through the LangChain `Ollama` integration instead of calling the Ollama library directly. Includes a sidebar model selector dropdown populated from `OLLAMA_MODEL` in `.env` — the same multi-model pattern used by `app.py`.
+
+```bash
+streamlit run examples/local_llm_with_langchain.py
+```
+
 ## Linting & Formatting
 
 This project uses [Ruff](https://docs.astral.sh/ruff/) for linting and formatting. It is included in `requirements.txt` and configured in [`ruff.toml`](ruff.toml).
@@ -139,7 +146,8 @@ ollama-local-llm/
 │   ├── chat_blocking.py           # Blocking chat request via the chat API
 │   ├── chat_streaming.py          # Streaming chat response via the chat API
 │   ├── generate_completion.py     # One-shot completion via the generate API
-│   └── vision_describe_image.py   # Multimodal image description using llava
+│   ├── vision_describe_image.py   # Multimodal image description using llava
+│   └── local_llm_with_langchain.py # Streamlit UI using LangChain's Ollama wrapper
 │
 ├── app.py                         # Streamlit interactive chat UI (main entry point)
 ├── requirements.txt               # Python dependencies

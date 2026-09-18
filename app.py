@@ -91,6 +91,21 @@ with st.sidebar:
 st.title("💬 Local LLM Chat")
 st.caption(f"Powered by Ollama · model: `{selected_model}`")
 
+st.markdown(
+    """
+    <style>
+    div[data-testid="stSpinner"] p {
+        color: #4ade80 !important;
+    }
+    div[data-testid="stSpinner"] svg {
+        color: #4ade80 !important;
+        fill: #4ade80 !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 if "show_model_info" in st.session_state:
     info_state = st.session_state["show_model_info"]
     with st.expander(
@@ -186,9 +201,10 @@ if prompt := st.chat_input("Enter your prompt here..."):
                     messages=st.session_state.messages,
                     stream=True,
                 )
-                for chunk in stream:
-                    full_response += chunk["message"]["content"]
-                    response_placeholder.markdown(full_response + "▌")
+                with st.spinner("Thinking…"):
+                    for chunk in stream:
+                        full_response += chunk["message"]["content"]
+                        response_placeholder.markdown(full_response + "▌")
                 response_placeholder.markdown(full_response)
             except ResponseError as e:
                 full_response = (
