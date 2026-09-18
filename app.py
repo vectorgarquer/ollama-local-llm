@@ -116,9 +116,15 @@ IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
-        if "images" in msg:
-            for img_bytes in msg["images"]:
-                st.image(img_bytes)
+        if "images" in msg and msg["images"]:
+            cols = st.columns(min(len(msg["images"]), 4))
+            for i, img_bytes in enumerate(msg["images"]):
+                with cols[i % min(len(msg["images"]), 4)]:
+                    st.image(
+                        img_bytes,
+                        caption=f"Image {i + 1}",
+                        use_container_width=True,
+                    )
 
 # Chat input with send arrow button
 if prompt := st.chat_input("Enter your prompt here..."):
@@ -160,8 +166,15 @@ if prompt := st.chat_input("Enter your prompt here..."):
 
         with st.chat_message("user"):
             st.markdown(user_content)
-            for img in images_payload:
-                st.image(img)
+            if images_payload:
+                cols = st.columns(min(len(images_payload), 4))
+                for i, img in enumerate(images_payload):
+                    with cols[i % min(len(images_payload), 4)]:
+                        st.image(
+                            img,
+                            caption=f"Image {i + 1}",
+                            use_container_width=True,
+                        )
 
         # Generate model response using streaming
         with st.chat_message("assistant"):

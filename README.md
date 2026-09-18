@@ -73,9 +73,12 @@ Features:
 - **Model Selector Dropdown**: Select any model configured in `OLLAMA_MODEL` (comma-separated list in `.env`).
 - **Inspect Model (`show`)**: Click **"🔍 View Model Info (`show`)"** in the sidebar to inspect detailed architecture, model family, context window, and vision/projector support.
 - **File & Image Attachments**:
-  - Automatically detects whether the selected model supports vision/multimodal inputs (e.g. `llava:7b`, `llama3.2-vision`).
-  - Allows attaching images (`.png`, `.jpg`, `.jpeg`, `.webp`) for vision-capable models.
+  - Automatically detects whether the selected model supports vision/multimodal inputs.
+  - Allows attaching images (`.png`, `.jpg`, `.jpeg`, `.webp`) for vision-capable models via drag & drop or file browsing.
   - Allows attaching text and code files (`.txt`, `.py`, `.md`, `.json`, `.csv`, `.yaml`, `.yml`) to inject context into the conversation.
+- **Multi-Image Considerations**:
+  - **Single-image models (`llava:7b`)**: Classic LLaVA v1.5 architectures only project a single image token slot per prompt; attaching multiple images will result in only the first image being analyzed.
+  - **True multi-image models (`llama3.2-vision:11b`, `qwen2.5-vl:7b`, `minicpm-v:8b`)**: Support cross-attention across multiple images simultaneously in the same conversation turn for image comparison and multi-document analysis.
 - **Clear Chat History**: Clears the conversation history and resets active inspect panels.
 
 ```bash
