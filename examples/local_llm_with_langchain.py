@@ -44,20 +44,54 @@ with st.sidebar:
 st.title("🦜 Local LLM with Langchain!")
 st.caption(f"Powered by Ollama · model: `{selected_model}`")
 
-# Input for the prompt
-prompt = st.text_area(label="Write your prompt.")
-button = st.button("Okay")
+st.markdown(
+    """
+    <style>
+    div[data-testid="stSpinner"] p  { color: #4ade80 !important; }
+    div[data-testid="stSpinner"] svg {
+        color: #4ade80 !important;
+        fill:  #4ade80 !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
-if button:
-    if prompt:
-        # Initialize the local LLM using LangChain's Ollama wrapper.
-        # The model is driven by the sidebar selection, which reads
-        # from OLLAMA_MODEL in .env.
+with st.expander("ℹ️ About this example & usage tips", expanded=False):
+    st.markdown(
+        """
+        This example shows how to call a local Ollama model through the
+        **LangChain** framework instead of the Ollama library directly.
+        LangChain wraps the model in a standard interface, making it easy
+        to plug into chains, agents, and pipelines later.
+
+        **How to use:**
+        1. Pick a model from the sidebar dropdown.
+        2. Type a prompt in the text area below.
+        3. Click **Okay** and wait for the response.
+
+        **Example prompts:**
+        - `Explain quantum computing in simple terms.`
+        - `Write a haiku about the ocean.`
+        - `What are the pros and cons of microservices architecture?`
+        - `Summarise the plot of Romeo and Juliet in 3 sentences.`
+        """
+    )
+
+# Wrap in a form so pressing Enter (or clicking the button) submits.
+with st.form("prompt_form"):
+    prompt = st.text_area(label="Write your prompt.", height=100)
+    submitted = st.form_submit_button("Okay")
+
+if submitted and prompt:
+    # Initialize the local LLM using LangChain's Ollama wrapper.
+    # The model is driven by the sidebar selection, which reads
+    # from OLLAMA_MODEL in .env.
+    with st.spinner("Thinking…"):
         llm = Ollama(model=selected_model)
 
-        # Generate a response using the local LLM.
-        # The LangChain wrapper returns the string directly (no dict unwrapping needed).
+        # The LangChain wrapper returns the string directly.
         response = llm(prompt)
 
-        # Display the response
-        st.markdown(response)
+    # Display the response
+    st.markdown(response)

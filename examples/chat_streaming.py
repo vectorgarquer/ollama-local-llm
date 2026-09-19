@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from ollama import chat
 
 load_dotenv()
-MODEL = os.environ.get("OLLAMA_MODEL", "granite4.2:8b")
+MODEL = os.environ.get("OLLAMA_MODEL", "granite4.2:8b").split(",")[0].strip()
 
 stream = chat(
     model=MODEL,
